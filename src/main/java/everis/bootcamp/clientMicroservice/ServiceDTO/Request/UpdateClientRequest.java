@@ -5,10 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class CreateClientRequest {
+public class UpdateClientRequest {
+    private String id;
     private String name;
+    private String type;
     private String status;
-
 }
