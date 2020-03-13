@@ -21,13 +21,13 @@ public class ClientController {
     private final ClientService clientService;
 
     //CREATE
-    @PostMapping(value = "/newClient",produces = {MediaType.APPLICATION_STREAM_JSON_VALUE})
-    public Mono<Client> createClient(@RequestBody ClientRequest clientRequest){
-        return clientService.create(clientRequest);
+    @PostMapping(value = "/newClient")
+    public Mono<Client> createClient(@RequestBody Client client){
+        return clientService.create(client);
     }
     //UPDATE
 
-    @PutMapping(value = "/update/{id}",produces = {MediaType.APPLICATION_STREAM_JSON_VALUE})
+    @PutMapping(value = "/update/{id}")
     public Mono<ResponseEntity<Client>> updateClient(@PathVariable("id") String id,@RequestBody ClientRequest clientRequest) {
         return clientService.update(id,clientRequest)
                 .map(client -> ResponseEntity.created(URI.create("/clients".concat(client.getId())))
@@ -35,13 +35,24 @@ public class ClientController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
     //READ
-    @GetMapping(value = "/selectAll",produces = {MediaType.APPLICATION_STREAM_JSON_VALUE})
-    public Mono<ResponseEntity<Flux<Client>>> list(){
-        return Mono.just(ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(clientService.readAll()));
+    @GetMapping(value = "/selectAll")
+    public ResponseEntity<Flux<Client>> listClient(){
+        return ResponseEntity.ok().body(clientService.readAll());
     }
     //DELETE
-    @DeleteMapping(value = "/delete/{clientId}",produces = {MediaType.APPLICATION_STREAM_JSON_VALUE})
+    @DeleteMapping(value = "/delete/{clientId}")
     public Mono<Client> deleteClient(@PathVariable(value = "clientId") String clientId){
         return clientService.delete(clientId);
     }
+    //FIND ONE
+    @GetMapping(value = "/find/{clientId}")
+    public Mono<Client> findOneClient(@PathVariable(value = "clientId") String clientId){
+        return clientService.getOne(clientId);
+    }
+    //EXIST
+    @GetMapping(value = "/exist/{clientId}")
+    public Mono<Boolean> existClient(@PathVariable(value = "clientId") String clientId){
+        return clientService.isPresent(clientId);
+    }
+
 }

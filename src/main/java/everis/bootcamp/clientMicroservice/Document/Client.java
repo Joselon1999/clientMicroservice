@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Client {
     @Id
     private String id;

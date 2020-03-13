@@ -8,8 +8,4 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface ClientRepository extends ReactiveMongoRepository<Client, String> {
-
-    Mono<Client> findByName(String name);
-
-    Flux<Client> findAllByStatusIsContaining(String status);
 }
