@@ -5,6 +5,7 @@ import everis.bootcamp.clientMicroservice.Repository.ClientRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -12,15 +13,16 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
 
+@AutoConfigureWebTestClient
 @SpringBootTest
 class ClientMicroserviceApplicationTests {
 
 	@MockBean
 	ClientRepository repository;
 
-	//@Autowired
-	//private WebTestClient webTestClient;
-/*
+	@Autowired
+	private WebTestClient webTestClient;
+
 	@Test
 	void testCreateEmployee() {
 		Client client = new Client();
@@ -30,7 +32,7 @@ class ClientMicroserviceApplicationTests {
 
 		Mockito.when(repository.save(client)).thenReturn(Mono.just(client));
 
-		webClient.post()
+		webTestClient.post()
 				.uri("/api/clients/newClient")
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(BodyInserters.fromObject(client))
@@ -39,5 +41,5 @@ class ClientMicroserviceApplicationTests {
 
 		Mockito.verify(repository, times(1)).save(client);
 	}
-*/
+
 }
