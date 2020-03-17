@@ -1,16 +1,20 @@
 package everis.bootcamp.clientMicroservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Configuration
 @SpringBootApplication
@@ -33,6 +37,19 @@ public class ClientMicroserviceApplication {
 		converter.setTypeMapper(new DefaultMongoTypeMapper(null));
 
 		return converter;
+	}
+
+	@RefreshScope
+	@RestController
+	class MessageRestController {
+
+		@Value("${server.url:Unable to connect to config server}")
+		private String url;
+
+		@RequestMapping("/server/url")
+		String getURL() {
+			return this.url;
+		}
 	}
 
 }
