@@ -62,7 +62,7 @@ public class ClientController {
     //EXIST
     @ApiOperation(value = "Validates client",
             notes = "Requires the client ID: Returns True if a client is found and false if it isn't")
-    @GetMapping(value = "/exist/{clientId}")
+    @GetMapping(value = "/client/exist/{clientId}")
     public Mono<Boolean> existClient(@PathVariable(value = "clientId") String clientId){
         return clientService.isPresent(clientId);
     }
