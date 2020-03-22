@@ -5,11 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-
 @AllArgsConstructor
 public class ClientRequest {
     private String name;
-    private String type;
+    private String idClientType;
     private String status;
 
 }

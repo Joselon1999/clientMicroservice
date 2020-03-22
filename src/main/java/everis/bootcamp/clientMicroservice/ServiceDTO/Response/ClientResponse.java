@@ -10,6 +10,6 @@ import lombok.*;
 public class ClientResponse {
     private String id;
     private String name;
-    private String type;
+    private String clientTypeName;
     private String status;
 }

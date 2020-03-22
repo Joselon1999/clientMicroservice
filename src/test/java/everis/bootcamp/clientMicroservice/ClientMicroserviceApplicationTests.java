@@ -1,6 +1,7 @@
 package everis.bootcamp.clientMicroservice;
 import static org.mockito.Mockito.times;
 import everis.bootcamp.clientMicroservice.Document.Client;
+import everis.bootcamp.clientMicroservice.Document.ClientType;
 import everis.bootcamp.clientMicroservice.Repository.ClientRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,7 +28,7 @@ class ClientMicroserviceApplicationTests {
 	void testCreateEmployee() {
 		Client client = new Client();
 		client.setName("Test");
-		client.setType("Type 1");
+		client.setClientType(new ClientType("1","test"));
 		client.setStatus("Status 1");
 
 		Mockito.when(repository.save(client)).thenReturn(Mono.just(client));

@@ -6,6 +6,7 @@ import everis.bootcamp.clientMicroservice.ServiceDTO.Request.ClientRequest;
 import everis.bootcamp.clientMicroservice.ServiceDTO.Request.UpdateClientRequest;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +17,17 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "/api")
 public class ClientController {
 
-    private final ClientService clientService;
+    @Autowired
+    ClientService clientService;
 
     //CREATE
     @ApiOperation(value = "Creates new clients")
     @PostMapping(value = "/clients")
-    public Mono<Client> createClient(@Valid @RequestBody Client client){
-        return clientService.create(client);
+    public Mono<Client> createClient(@Valid @RequestBody ClientRequest clientRequest){
+        return clientService.create(clientRequest);
     }
     //UPDATE
     @ApiOperation(value = "Updates clients",
@@ -66,5 +67,6 @@ public class ClientController {
     public Mono<Boolean> existClient(@PathVariable(value = "clientId") String clientId){
         return clientService.isPresent(clientId);
     }
+
 
 }

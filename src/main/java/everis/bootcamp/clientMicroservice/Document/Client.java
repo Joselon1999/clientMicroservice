@@ -3,8 +3,10 @@ package everis.bootcamp.clientMicroservice.Document;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Document
@@ -17,8 +19,11 @@ public class Client {
     private String id;
     @NotBlank(message = "'Names' can't be blank")
     private String name;
-    @NotBlank(message = "'Type' can't be blank")
-    private String type;
+    //@NotBlank(message = "'Type' can't be blank")
+    //private String type;
+    @NotNull(message = "'Type' can't be blank")
+    //private Mono<ClientType> clientType;
+    private ClientType clientType;
     @NotBlank(message = "'Status' can't be blank")
     private String status;
 }

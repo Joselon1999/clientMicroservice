@@ -6,7 +6,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ClientService {
-    Mono<Client> create(Client client);
+    Mono<Client> create(ClientRequest clientRequest);
     Mono<Client> update(String id,ClientRequest clientRequest);
     Flux<Client> readAll();
     Mono<Client> delete(String id);
