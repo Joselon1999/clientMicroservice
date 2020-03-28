@@ -19,10 +19,7 @@ public class Client {
     private String id;
     @NotBlank(message = "'Names' can't be blank")
     private String name;
-    //@NotBlank(message = "'Type' can't be blank")
-    //private String type;
     @NotNull(message = "'Type' can't be blank")
-    //private Mono<ClientType> clientType;
     private ClientType clientType;
     @NotBlank(message = "'Status' can't be blank")
     private String status;

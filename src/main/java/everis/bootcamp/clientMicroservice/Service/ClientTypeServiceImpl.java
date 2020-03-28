@@ -44,4 +44,6 @@ public class ClientTypeServiceImpl implements ClientTypeService{
     public Mono<ClientType> getOne(String id) {
         return clientTypeRepository.findById(id);
     }
+
+
 }

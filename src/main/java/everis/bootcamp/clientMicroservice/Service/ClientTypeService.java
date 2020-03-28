@@ -12,4 +12,5 @@ public interface ClientTypeService {
     Flux<ClientType> readAll();
     Mono<ClientType> delete(String id);
     Mono<ClientType> getOne(String id);
+
 }

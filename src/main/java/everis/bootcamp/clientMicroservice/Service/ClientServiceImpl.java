@@ -27,29 +27,39 @@ public class ClientServiceImpl implements ClientService {
     //CREATE 100%
     @Override
     public Mono<Client> create(ClientRequest clientRequest) {
-        Client client = new Client();
-        client.setName(clientRequest.getName());
-        client.setClientType(ClientType.builder().id(clientRequest.getIdClientType()).build());
-        client.setStatus(clientRequest.getStatus());
-        return clientRepository.save(client);
+        Mono<ClientType> clientTypeMono = clientTypeRepository.findById(clientRequest.getIdClientType());
+        return clientTypeMono.flatMap(type ->
+                {
+                    Client client = new Client();
+                    client.setName(clientRequest.getName());
+                    client.setClientType(ClientType.builder()
+                            .id(type.getId())
+                            .name(type.getName())
+                            .build());
+                    client.setStatus(clientRequest.getStatus());
+                    return clientRepository.save(client);
+                }
+        );
     }
 
     @Override
     public Mono<Client> update(String id, ClientRequest clientRequest) {
-        return clientRepository.findById(id);
-//                .flatMap(client -> {
-//            Mono<ClientType> type = clientTypeRepository.findById(clientRequest.getIdClientType())
-//                    .map(clientType ->
-//                            client.setClientType(ClientType.builder()
-//                                    .id(clientType.getId())
-//                                    .name(clientType.getName())
-//                                    .build()));
-//            client.setName(clientRequest.getName());
-//
-//            client.setStatus(clientRequest.getStatus());
-//            return clientRepository.save(client);
-//        });
-
+        Mono<ClientType> clientTypeMono = clientTypeRepository.findById(clientRequest.getIdClientType());
+        return clientRepository.findById(id)
+                .flatMap(thisClient -> {
+                    Mono<Client> clientMono = clientTypeMono.flatMap(type ->
+                            {
+                                thisClient.setName(clientRequest.getName());
+                                thisClient.setClientType(ClientType.builder()
+                                        .id(type.getId())
+                                        .name(type.getName())
+                                        .build());
+                                thisClient.setStatus(clientRequest.getStatus());
+                                return clientRepository.save(thisClient);
+                            }
+                    );
+                    return clientMono;
+                }).switchIfEmpty(Mono.empty());
     }
 
     /*READ 100%*/
@@ -79,4 +89,12 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.existsById(id);
     }
 
+    @Override
+    public Mono<String> getType(String id) {
+        Mono<Client> client = clientRepository.findById(id);
+        Mono<String> type = client.map(client1 -> {
+            return client1.getClientType().getName();
+        });
+        return type;
+    }
 }
