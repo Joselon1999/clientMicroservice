@@ -6,9 +6,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ClientRequest {
     private String name;
     private String idClientType;
+    private String bankId;
     private String status;
 
 }

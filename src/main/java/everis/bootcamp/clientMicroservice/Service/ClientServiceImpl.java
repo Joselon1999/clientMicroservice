@@ -16,13 +16,22 @@ import java.util.Objects;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    @Autowired
-    ClientRepository clientRepository;
+
+    private final ClientRepository clientRepository;
+
+    //private final ClientTypeRepository clientTypeRepository;
     @Autowired
     ClientTypeRepository clientTypeRepository;
+
+
+    public ClientServiceImpl(ClientRepository repository) {
+        this.clientRepository=repository;
+    }
+    //public ClientTypeServiceImpl(ClientTypeRepository repository) {
+    //    this.clientTypeRepository=repository;
+    //}
 
     //CREATE 100%
     @Override
@@ -32,6 +41,7 @@ public class ClientServiceImpl implements ClientService {
                 {
                     Client client = new Client();
                     client.setName(clientRequest.getName());
+                    client.setBankId(clientRequest.getBankId());
                     client.setClientType(ClientType.builder()
                             .id(type.getId())
                             .name(type.getName())
@@ -50,6 +60,7 @@ public class ClientServiceImpl implements ClientService {
                     Mono<Client> clientMono = clientTypeMono.flatMap(type ->
                             {
                                 thisClient.setName(clientRequest.getName());
+                                thisClient.setBankId(clientRequest.getBankId());
                                 thisClient.setClientType(ClientType.builder()
                                         .id(type.getId())
                                         .name(type.getName())
@@ -89,6 +100,7 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.existsById(id);
     }
 
+    //TODO Corregir esta asquerosidad
     @Override
     public Mono<String> getType(String id) {
         Mono<Client> client = clientRepository.findById(id);

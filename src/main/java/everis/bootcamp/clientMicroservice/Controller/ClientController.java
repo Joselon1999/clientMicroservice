@@ -3,7 +3,6 @@ package everis.bootcamp.clientMicroservice.Controller;
 import everis.bootcamp.clientMicroservice.Document.Client;
 import everis.bootcamp.clientMicroservice.Service.ClientService;
 import everis.bootcamp.clientMicroservice.ServiceDTO.Request.ClientRequest;
-import everis.bootcamp.clientMicroservice.ServiceDTO.Request.UpdateClientRequest;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

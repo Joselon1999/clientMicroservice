@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Client {
     @Id
     private String id;
@@ -21,6 +22,8 @@ public class Client {
     private String name;
     @NotNull(message = "'Type' can't be blank")
     private ClientType clientType;
+    @NotBlank(message = "'bankId' can't be blank")
+    private String bankId;
     @NotBlank(message = "'Status' can't be blank")
     private String status;
 }
